@@ -7,7 +7,7 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import Typography from "@mui/material/Typography";
-import { useMemo, useState } from "react";
+import { lazy, Suspense, useCallback, useMemo, useState } from "react";
 import { useAllTasks, useUpdateTask } from "../../../hooks/useTasks";
 import type { Task } from "../../../types/task.types";
 import { COLUMNS } from "../../../utils/constants/kanban.constants";
@@ -20,7 +20,9 @@ import {
   StyledHeaderBox,
 } from "./KanbanBoard.styles";
 import TaskCard from "../task-card/TaskCard";
-import TaskModal from "../task-model/TaskModal";
+import Loader from "../../Loader/Loader";
+
+const TaskModal = lazy(() => import("../task-model/TaskModal"));
 
 const KanbanBoard = () => {
   const [activeTask, setActiveTask] = useState<Task | null>(null);
@@ -44,12 +46,12 @@ const KanbanBoard = () => {
     })
   );
 
-  const handleDragStart = (event: DragStartEvent) => {
+  const handleDragStart = useCallback((event: DragStartEvent) => {
     const { active } = event;
     setActiveTask(active.data.current?.task || null);
-  };
+  }, []);
 
-  const handleDragEnd = (event: DragEndEvent) => {
+  const handleDragEnd = useCallback((event: DragEndEvent) => {
     const { active, over } = event;
 
     if (!over) {
@@ -72,11 +74,11 @@ const KanbanBoard = () => {
     }
 
     setActiveTask(null);
-  };
+  }, [updateTask]);
 
-  const handleDragCancel = () => {
+  const handleDragCancel = useCallback(() => {
     setActiveTask(null);
-  };
+  }, []);
 
   return (
     <StyledContainer maxWidth={false}>
@@ -110,7 +112,9 @@ const KanbanBoard = () => {
         </DragOverlay>
       </DndContext>
 
-      <TaskModal />
+      <Suspense fallback={<Loader isLoading />}>
+        <TaskModal />
+      </Suspense>
     </StyledContainer>
   );
 };

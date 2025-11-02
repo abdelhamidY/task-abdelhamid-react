@@ -5,12 +5,12 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       enabled: true,
-      staleTime: 30000,
-      gcTime: 5 * 60 * 1000,
+      staleTime: 60000,
+      gcTime: 10 * 60 * 1000,
       refetchOnWindowFocus: false,
       refetchOnMount: true,
-      refetchOnReconnect: false,
-      retry: false,
+      refetchOnReconnect: true,
+      retry: 3,
     },
   },
 });

@@ -6,7 +6,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
-import { useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../utils/store/store.config";
 import type { ColumnStatus } from "../../../types/task.types";
 import { useCreateTask, useDeleteTask, useUpdateTask } from "../../../hooks/useTasks";
@@ -31,8 +31,8 @@ const TaskModal = () => {
   const { mutate: updateTask, isPending: isUpdating } = useUpdateTask();
   const { mutate: deleteTask, isPending: isDeleting } = useDeleteTask();
 
-  const isEditMode = !!selectedTask?.id;
-  const isPending = isCreating || isUpdating;
+  const isEditMode = useMemo(() => !!selectedTask?.id, [selectedTask?.id]);
+  const isPending = useMemo(() => isCreating || isUpdating, [isCreating, isUpdating]);
 
   useEffect(() => {
     if (selectedTask) {
@@ -47,7 +47,7 @@ const TaskModal = () => {
     setErrors({});
   }, [selectedTask, isTaskModalOpen]);
 
-  const validateForm = () => {
+  const validateForm = useCallback(() => {
     const newErrors: { title?: string; description?: string } = {};
 
     if (!title.trim()) {
@@ -60,12 +60,12 @@ const TaskModal = () => {
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  };
+  }, [title, description]);
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     if (!validateForm()) return;
 
-    if (isEditMode) {
+    if (isEditMode && selectedTask) {
       updateTask(
         {
           id: selectedTask.id,
@@ -79,7 +79,7 @@ const TaskModal = () => {
           },
         }
       );
-    } else {
+    } else if (!isEditMode) {
       createTask(
         {
           title: title.trim(),
@@ -93,13 +93,13 @@ const TaskModal = () => {
         }
       );
     }
-  };
+  }, [validateForm, isEditMode, selectedTask, title, description, column, updateTask, createTask, dispatch]);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     dispatch(closeTaskModal());
-  };
+  }, [dispatch]);
 
-  const handleDeleteConfirm = () => {
+  const handleDeleteConfirm = useCallback(() => {
     if (taskToDelete) {
       deleteTask(taskToDelete, {
         onSuccess: () => {
@@ -107,11 +107,11 @@ const TaskModal = () => {
         },
       });
     }
-  };
+  }, [taskToDelete, deleteTask, dispatch]);
 
-  const handleDeleteCancel = () => {
+  const handleDeleteCancel = useCallback(() => {
     dispatch(closeDeleteDialog());
-  };
+  }, [dispatch]);
 
   return (
     <>
@@ -213,4 +213,4 @@ const TaskModal = () => {
   );
 };
 
-export default TaskModal;
+export default memo(TaskModal);

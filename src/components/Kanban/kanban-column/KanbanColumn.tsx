@@ -2,6 +2,7 @@ import { useDroppable } from "@dnd-kit/core";
 import AddIcon from "@mui/icons-material/Add";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
+import { memo, useCallback } from "react";
 import type { Column, Task } from "../../../types/task.types";
 import { useAppDispatch } from "../../../utils/store/store.config";
 import { openTaskModal } from "../../../utils/store/slices/ui.slice";
@@ -25,7 +26,7 @@ const KanbanColumn = ({ column, tasks, isLoading, isError }: KanbanColumnProps) 
 
   const totalCount = tasks.length;
 
-  const handleAddTask = () => {
+  const handleAddTask = useCallback(() => {
     dispatch(
       openTaskModal({
         id: "",
@@ -34,7 +35,7 @@ const KanbanColumn = ({ column, tasks, isLoading, isError }: KanbanColumnProps) 
         column: column.id,
       })
     );
-  };
+  }, [dispatch, column.id]);
 
   return (
     <StyledPaper
@@ -97,4 +98,4 @@ const KanbanColumn = ({ column, tasks, isLoading, isError }: KanbanColumnProps) 
   );
 };
 
-export default KanbanColumn;
+export default memo(KanbanColumn);

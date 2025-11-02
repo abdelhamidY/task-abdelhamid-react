@@ -2,7 +2,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
-import { useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import {
   useAppDispatch,
   useAppSelector,
@@ -31,10 +31,10 @@ const SearchBar = () => {
     setLocalValue(searchQuery);
   }, [searchQuery]);
 
-  const handleClear = () => {
+  const handleClear = useCallback(() => {
     setLocalValue("");
     dispatch(clearSearch());
-  };
+  }, [dispatch]);
 
   return (
     <StyledTextField
@@ -61,4 +61,4 @@ const SearchBar = () => {
   );
 };
 
-export default SearchBar;
+export default memo(SearchBar);

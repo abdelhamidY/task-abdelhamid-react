@@ -1,7 +1,7 @@
 import createCache from "@emotion/cache";
 import { createTheme } from "@mui/material/styles";
 
-let theme = createTheme({
+const theme = createTheme({
   spacing: 4,
   direction: "ltr",
   breakpoints: {

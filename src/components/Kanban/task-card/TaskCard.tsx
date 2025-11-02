@@ -3,6 +3,7 @@ import { CSS } from "@dnd-kit/utilities";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
+import { memo, useCallback, useMemo } from "react";
 import type { Task } from "../../../types/task.types";
 import {
   openDeleteDialog,
@@ -44,26 +45,30 @@ const TaskCard = ({ task, isDragging = false }: TaskCardProps) => {
     },
   });
 
-  const style = {
+  const style = useMemo(() => ({
     transform: CSS.Translate.toString(transform),
     opacity: isBeingDragged ? 0.5 : 1,
     cursor: isBeingDragged ? "grabbing" : "grab",
-  };
+  }), [transform, isBeingDragged]);
 
-  const handleEdit = (e: React.MouseEvent) => {
+  const handleEdit = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
     dispatch(openTaskModal(task));
-  };
+  }, [dispatch, task]);
 
-  const handleDelete = (e: React.MouseEvent) => {
+  const handleDelete = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
     dispatch(openDeleteDialog(task.id));
-  };
+  }, [dispatch, task.id]);
 
-  const highlightText = (text: string) => {
-    if (!searchQuery) return text;
+  const searchRegex = useMemo(() => {
+    return searchQuery ? new RegExp(`(${searchQuery})`, "gi") : null;
+  }, [searchQuery]);
 
-    const parts = text.split(new RegExp(`(${searchQuery})`, "gi"));
+  const highlightText = useCallback((text: string) => {
+    if (!searchQuery || !searchRegex) return text;
+
+    const parts = text.split(searchRegex);
     return parts.map((part, index) =>
       part.toLowerCase() === searchQuery.toLowerCase() ? (
         <StyledHighlight key={index}>{part}</StyledHighlight>
@@ -71,7 +76,7 @@ const TaskCard = ({ task, isDragging = false }: TaskCardProps) => {
         part
       )
     );
-  };
+  }, [searchQuery, searchRegex]);
 
   return (
     <StyledCard
@@ -109,4 +114,4 @@ const TaskCard = ({ task, isDragging = false }: TaskCardProps) => {
   );
 };
 
-export default TaskCard;
+export default memo(TaskCard);

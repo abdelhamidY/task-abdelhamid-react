@@ -1,18 +1,11 @@
 {
   "tasks": [
     {
-      "id": "1",
-      "title": "Design homepage",
-      "description": "Include hero section with call-to-action",
-      "column": "review",
-      "oldColumn": "in_progress"
-    },
-    {
       "id": "2",
       "title": "Setup authentication",
       "description": "Implement JWT-based authentication",
-      "column": "done",
-      "oldColumn": "backlog"
+      "column": "review",
+      "oldColumn": "done"
     },
     {
       "id": "3",
