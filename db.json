@@ -1,0 +1,102 @@
+{
+  "tasks": [
+    {
+      "id": "1",
+      "title": "Design homepage",
+      "description": "Include hero section with call-to-action",
+      "column": "review",
+      "oldColumn": "in_progress"
+    },
+    {
+      "id": "2",
+      "title": "Setup authentication",
+      "description": "Implement JWT-based authentication",
+      "column": "done",
+      "oldColumn": "backlog"
+    },
+    {
+      "id": "3",
+      "title": "Create user profile page",
+      "description": "Design and implement user profile UI",
+      "column": "backlog"
+    },
+    {
+      "id": "5",
+      "title": "Database schema design2",
+      "description": "Design normalized database schema",
+      "column": "review"
+    },
+    {
+      "id": "6",
+      "title": "Write unit tests",
+      "description": "Add test coverage for core components",
+      "column": "review",
+      "oldColumn": "in_progress"
+    },
+    {
+      "id": "7",
+      "title": "Code review documentation",
+      "description": "Review and update API documentation",
+      "column": "in_progress",
+      "oldColumn": "review"
+    },
+    {
+      "id": "8",
+      "title": "Setup project repository",
+      "description": "Initialize Git repo and add README",
+      "column": "done"
+    },
+    {
+      "id": "9",
+      "title": "Choose tech stack",
+      "description": "Finalize technology decisions",
+      "column": "done"
+    },
+    {
+      "id": "10",
+      "title": "Setup CI/CD pipeline",
+      "description": "Configure GitHub Actions for automated testing",
+      "column": "backlog"
+    },
+    {
+      "id": "11",
+      "title": "Implement search functionality",
+      "description": "Add global search with filters",
+      "column": "backlog"
+    },
+    {
+      "id": "12",
+      "title": "Optimize performance",
+      "description": "Analyze and improve app performance",
+      "column": "in_progress",
+      "oldColumn": "review"
+    },
+    {
+      "id": "13",
+      "title": "Security audit",
+      "description": "Conduct security vulnerability assessment",
+      "column": "in_progress",
+      "oldColumn": "review"
+    },
+    {
+      "id": "14",
+      "title": "Project kickoff meeting",
+      "description": "Initial team meeting and planning",
+      "column": "review",
+      "oldColumn": "done"
+    },
+    {
+      "id": "15",
+      "title": "Design system setup",
+      "description": "Create design tokens and component library",
+      "column": "done",
+      "oldColumn": "review"
+    },
+    {
+      "id": "1762002815832",
+      "title": "Design homepage components",
+      "description": "include buttons",
+      "column": "backlog"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+html {
+  scroll-behavior: smooth;
+}
+
+.has-app-max-width {
+  max-width: 1440px;
+  margin: auto;
+  width: 100%;
+}
