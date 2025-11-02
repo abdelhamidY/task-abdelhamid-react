@@ -4,10 +4,7 @@ import type {
   UpdateTaskDto,
   ColumnStatus,
 } from "../../types/task.types";
-import {
-  API_BASE_URL,
-  TASKS_PER_PAGE,
-} from "../../utils/constants/kanban.constants";
+import { TASKS_PER_PAGE } from "../../utils/constants/kanban.constants";
 
 interface FetchTasksParams {
   column: ColumnStatus;
@@ -36,7 +33,9 @@ export const tasksApi = {
       params.append("q", search);
     }
 
-    const response = await fetch(`${API_BASE_URL}/tasks?${params.toString()}`);
+    const response = await fetch(
+      `${import.meta.env.VITE_BASE_URL}/tasks?${params.toString()}`
+    );
 
     if (!response.ok) {
       throw new Error("Failed to fetch tasks");
@@ -58,7 +57,9 @@ export const tasksApi = {
       params.append("q", search);
     }
 
-    const response = await fetch(`${API_BASE_URL}/tasks?${params.toString()}`);
+    const response = await fetch(
+      `${import.meta.env.VITE_BASE_URL}/tasks?${params.toString()}`
+    );
 
     if (!response.ok) {
       throw new Error("Failed to fetch all tasks");
@@ -77,7 +78,9 @@ export const tasksApi = {
       params.append("q", search);
     }
 
-    const response = await fetch(`${API_BASE_URL}/tasks?${params.toString()}`);
+    const response = await fetch(
+      `${import.meta.env.VITE_BASE_URL}/tasks?${params.toString()}`
+    );
 
     if (!response.ok) {
       throw new Error("Failed to fetch tasks by column");
@@ -87,7 +90,7 @@ export const tasksApi = {
   },
 
   createTask: async (taskData: CreateTaskDto): Promise<Task> => {
-    const response = await fetch(`${API_BASE_URL}/tasks`, {
+    const response = await fetch(`${import.meta.env.VITE_BASE_URL}/tasks`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -106,13 +109,16 @@ export const tasksApi = {
   },
 
   updateTask: async ({ id, ...updates }: UpdateTaskDto): Promise<Task> => {
-    const response = await fetch(`${API_BASE_URL}/tasks/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updates),
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_BASE_URL}/tasks/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updates),
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Failed to update task");
@@ -122,9 +128,12 @@ export const tasksApi = {
   },
 
   deleteTask: async (id: string): Promise<void> => {
-    const response = await fetch(`${API_BASE_URL}/tasks/${id}`, {
-      method: "DELETE",
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_BASE_URL}/tasks/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Failed to delete task");
@@ -132,7 +141,9 @@ export const tasksApi = {
   },
 
   getTask: async (id: string): Promise<Task> => {
-    const response = await fetch(`${API_BASE_URL}/tasks/${id}`);
+    const response = await fetch(
+      `${import.meta.env.VITE_BASE_URL}/tasks/${id}`
+    );
 
     if (!response.ok) {
       throw new Error("Failed to fetch task");

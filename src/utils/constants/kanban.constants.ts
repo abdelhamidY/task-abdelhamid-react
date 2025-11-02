@@ -23,8 +23,6 @@ export const COLUMNS: Column[] = [
   },
 ];
 
-export const API_BASE_URL = "http://localhost:4000";
-
 export const TASKS_PER_PAGE = 10;
 
 export const SEARCH_DEBOUNCE_MS = 300;
